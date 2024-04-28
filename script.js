@@ -20,7 +20,7 @@ function render(todos) {
     return `
       <li class="list-group-item">
         <input type="checkbox" class="form-check-input me-2" id="${todo.id}" ${todo.checked ? 'checked' : ''} onchange="checkTodo(${todo.id}, this.checked)">
-        <label for="${todo.id}" class="${todo.checked ? 'text-success text-decoration-line-through' : ''}">${todo.text}</label>
+        <label for="${todo.id}" class="${todo.checked ? 'text-success text-decoration-line-through completed' : ''}">${todo.text}</label>
         <button class="btn btn-danger btn-sm float-end" onclick="deleteTodo(${todo.id})">delete</button>
       </li>
     `;
@@ -35,6 +35,7 @@ function checkTodo(id, checked) {
     todo.checked = checked;
     saveTodos();
     updateCounter();
+    render(todos); // Оновлення відображення після зміни стану завдання
   }
 }
 
@@ -42,6 +43,7 @@ function deleteTodo(id) {
   todos = todos.filter(todo => todo.id !== id);
   saveTodos();
   updateCounter();
+  render(todos); // Оновлення відображення після видалення завдання
 }
 
 function updateCounter() {
